@@ -13,8 +13,7 @@ const renderCountry = function (data, className = '') {
       <p class="country__row"><span>👫</span>${(
         +data.population / 1000000
       ).toFixed(1)} people</p>
-      <p class="country__row"><span>🗣️</span>${data.languages}</p>
-      <p class="country__row"><span>💰</span>${0}</p>
+      <p id="currency" class="country__row"></p>
     </div>
   </article>
   `;
@@ -30,8 +29,13 @@ const showCountryDetails = async function (country) {
     const data = await response.json();
     renderCountry(data[0]);
 
-    const currencies = Object.keys(data[0].currencies)[0];
-    console.log(currencies);
+    const curr = document.getElementById('currency');
+
+    const currencies = Object.keys(data[0].currencies);
+    currencies.map(c => {
+      curr.innerHTML = ` <span>💰</span>${c}`;
+    });
+
     console.log(data);
   } catch (err) {
     console.error(err);

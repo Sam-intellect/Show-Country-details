@@ -13,7 +13,9 @@ const renderCountry = function (data, className = '') {
       <p class="country__row"><span>👫</span>${(
         +data.population / 1000000
       ).toFixed(1)} people</p>
-      <p id="currency" class="country__row"></p>
+       <p id="language" class="country__row"><span>🗣️</span>LANG</p>
+      <p id="currency" class="country__row"><span>💰</span>CUR</p>
+
     </div>
   </article>
   `;
@@ -29,11 +31,17 @@ const showCountryDetails = async function (country) {
     const data = await response.json();
     renderCountry(data[0]);
 
+    const lang = document.getElementById('language');
     const curr = document.getElementById('currency');
 
-    const currencies = Object.keys(data[0].currencies);
-    currencies.map(c => {
-      curr.innerHTML = ` <span>💰</span>${c}`;
+    const currencies = Object.entries(data[0].currencies).forEach(entry => {
+      const [key, value] = entry;
+      curr.innerHTML = `<span>💰</span>${key}`;
+    });
+
+    const language = Object.entries(data[0].languages).forEach(entry => {
+      const [key, value] = entry;
+      lang.innerHTML = `<span>🗣️</span>${value}`;
     });
 
     console.log(data);

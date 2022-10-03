@@ -51,21 +51,19 @@ const showCountryDetails = async function (country) {
     console.error(err);
   }
 };
-showCountryDetails('USA');
+showCountryDetails('Nigeria');
 
 // GO FIND me
-function success(position) {
-  const latitude = position.coords.latitude;
-  const longitude = position.coords.longitude;
-  console.log(latitude, longitude);
-}
 
-function error() {
-  console.error('Unable to retrieve your location');
-}
-
-if (!navigator.geolocation) {
-  console.log('Geolocation is not supported by your browser');
-} else {
-  navigator.geolocation.getCurrentPosition(success, error);
-}
+if (navigator.geolocation)
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const { latitude } = position.coords;
+      const { longitude } = position.coords;
+      console.log(`https://www.google.com/maps/@${latitude},${longitude},15z`);
+      console.log(latitude, longitude);
+    },
+    function () {
+      alert('could not get your position');
+    }
+  );

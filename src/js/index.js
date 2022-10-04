@@ -67,3 +67,14 @@ if (navigator.geolocation)
       alert('could not get your position');
     }
   );
+
+function initMap() {
+  const options = {
+    center: { lat: 6.5568768, lng: 3.3718272 },
+    zoom: 8,
+  };
+
+  map = new google.maps.Map(document.getElementById('map'), options);
+}
+
+window.initMap = initMap;
